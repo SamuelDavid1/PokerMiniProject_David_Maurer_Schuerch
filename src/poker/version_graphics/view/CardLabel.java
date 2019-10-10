@@ -28,7 +28,7 @@ public class CardLabel extends Label {
 	private String cardToFileName(Card card) {
 		String rank = card.getRank().toString();
 		String suit = card.getSuit().toString();
-		return rank + "_of_" + suit + ".png";
+		return rank + "_of_" + suit + ".jpg";
 	}
 
 }

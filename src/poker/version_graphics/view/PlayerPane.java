@@ -3,6 +3,7 @@ package poker.version_graphics.view;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import poker.version_graphics.model.Card;
 import poker.version_graphics.model.HandType;
@@ -12,6 +13,7 @@ public class PlayerPane extends VBox {
     private Label lblName = new Label();
     private HBox hboxCards = new HBox();
     private Label lblEvaluation = new Label("--");
+
     
     // Link to player object
     private Player player;
@@ -27,7 +29,10 @@ public class PlayerPane extends VBox {
         for (int i = 0; i < 5; i++) {
             Label lblCard = new CardLabel();
             hboxCards.getChildren().add(lblCard);
+            hboxCards.setSpacing(10);
         }
+        this.setId("playerArea");
+
     }
     
     public void setPlayer(Player player) {
