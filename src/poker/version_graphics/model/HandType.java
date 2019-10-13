@@ -20,6 +20,8 @@ public enum HandType {
         if (isFullHouse(cards)) currentEval = FullHouse;
         if (isFourOfAKind(cards)) currentEval = FourOfAKind;
         if (isStraightFlush(cards)) currentEval = StraightFlush;
+        //if (isRoyalFlush(cards)) currentEval = RoyalFlush;  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //Royal Flush fehlt  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
         return currentEval;
     }
@@ -79,6 +81,11 @@ public enum HandType {
     }
     
     public static boolean isStraightFlush(ArrayList<Card> cards) {
+        // TODO        
+        return false;
+    }
+    
+    public static boolean isRoyalFlush(ArrayList<Card> cards) {
         // TODO        
         return false;
     }

@@ -20,6 +20,8 @@ public class PokerGameController {
 		
 		view.getShuffleButton().setOnAction( e -> shuffle() );
 		view.getDealButton().setOnAction( e -> deal() );
+		view.getJoinButton().setOnAction( e -> join() );
+		view.getLeaveButton().setOnAction( e -> leave() );
 	}
 	
 
@@ -60,5 +62,17 @@ public class PokerGameController {
             Alert alert = new Alert(AlertType.ERROR, "Not enough cards - shuffle first");
             alert.showAndWait();
     	}
+    }
+    
+    private void join () {
+    	//muss testen ob max spieler anzahl überschritten wird oder nicht, sonst hinweis
+    	System.out.println("join funzt");	//to delete
+    	
+    }
+    
+    private void leave () {
+    	//muss testen ob mindestens 2 Spieler dabei sind
+    	System.out.println("leave funzt");  //to delete
+    	
     }
 }
