@@ -1,6 +1,7 @@
 package poker.version_graphics.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player implements Comparable<Player> {
     public static final int HAND_SIZE = 5;
@@ -46,10 +47,38 @@ public class Player implements Comparable<Player> {
     }
 
     /**
+     * If two hands are the same compare the highest ranked card
+     * returning 1, 0 or -1 depending on whether the highest given card is higher, equal or lower than the other
+     */
+   
+    	// not done yet:
+//    private int compareHighestRank(Player p) {
+//		ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
+//		ArrayList<Card> pClonedCards = (ArrayList<Card>) p.getCards().clone();
+//	
+//    	Collections.sort(clonedCards);
+//		Collections.sort((pClonedCards));
+//		
+//		if(clonedCards.get(clonedCards.size() - 1).getRank().compareTo(pClonedCards.get(pClonedCards.size() - 1).getRank()) > 1) {
+//			return 1;
+//		}
+//		if(clonedCards.get(clonedCards.size() - 1).getRank().compareTo(pClonedCards.get(pClonedCards.size() - 1).getRank()) < 1) {
+//			return -1;
+//		} else {
+//			return 0;
+//		}
+//	}
+    /**
      * Hands are compared, based on the evaluation they have.
+     * Added compareHighestRank method in order to be able to find a winner in case of a tie.
      */
     @Override
     public int compareTo(Player o) {
-        return handType.compareTo(o.handType);
+//      not done yet:  
+//    	if(handType.compareTo(o.handType) == 0) {
+//        	return this.compareHighestRank(o);
+//        }
+    	
+    	return handType.compareTo(o.handType);
     }
 }

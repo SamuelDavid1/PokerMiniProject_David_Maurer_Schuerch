@@ -1,9 +1,13 @@
 package poker.version_graphics.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
+import poker.version_graphics.model.Card.Rank;
 
 public enum HandType {
-    HighCard, OnePair, TwoPair, ThreeOfAKind, Straight, Flush, FullHouse, FourOfAKind, StraightFlush;
+    HighCard, OnePair, TwoPair, ThreeOfAKind, Straight, Flush, FullHouse, FourOfAKind, StraightFlush, RoyalFlush;
     
     /**
      * Determine the value of this hand. Note that this does not
@@ -20,8 +24,7 @@ public enum HandType {
         if (isFullHouse(cards)) currentEval = FullHouse;
         if (isFourOfAKind(cards)) currentEval = FourOfAKind;
         if (isStraightFlush(cards)) currentEval = StraightFlush;
-        //if (isRoyalFlush(cards)) currentEval = RoyalFlush;  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //Royal Flush fehlt  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (isRoyalFlush(cards)) currentEval = RoyalFlush; 
         
         return currentEval;
     }
@@ -56,37 +59,152 @@ public enum HandType {
     }
     
     public static boolean isThreeOfAKind(ArrayList<Card> cards) {
-        // TODO        
-        return false;
+        ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
+        
+        int sameRank = 0;
+        	for (int i = 0; i < clonedCards.size() - 1; i++) {
+        		for (int j = i+1; j < clonedCards.size(); j++) {
+        				if(clonedCards.get(i).getRank() == clonedCards.get(j).getRank()) {
+        					sameRank++;
+        				}
+        		}
+        	}
+        if(sameRank >= 3) {
+        	return true;
+        } else {
+        	return false;
+        } 
     }
     
+    // method only used for isFullHouse to get the rank of the three of a kind cards
+    private static Rank getThreeOfAKindRank(ArrayList<Card> cards) {
+    	   ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
+           
+    	   Rank searchedRank = null;
+           int sameRank = 0;
+           	for (int i = 0; i < clonedCards.size() - 1; i++) {
+           		for (int j = i+1; j < clonedCards.size(); j++) {
+           				if(clonedCards.get(i).getRank() == clonedCards.get(j).getRank()) {
+           					sameRank++;
+           					searchedRank = clonedCards.get(i).getRank();
+           				}
+           		}
+           	}
+           if(sameRank >= 3) {
+           	return searchedRank;
+           } else {
+        	   return null;
+           }             
+       }
+    	
     public static boolean isStraight(ArrayList<Card> cards) {
-        // TODO        
-        return false;
+    	ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
+    	boolean straightFound = false;
+    	int successfulTries = 0;
+    	boolean next = true;
+    	
+    	Collections.sort(clonedCards);
+
+    		for(int i = 0; i < clonedCards.size() && next; i++) {
+    			if(clonedCards.get(i).getRank().compareTo(clonedCards.get(i+1).getRank()) == -1) {
+    				successfulTries++;
+    			} else {
+    				next = false;
+    			}
+    			if(successfulTries == 4) {
+    				next = false;
+    				straightFound = true;
+    			}	
+    		}
+    	 
+    	return straightFound;
     }
     
     public static boolean isFlush(ArrayList<Card> cards) {
-        // TODO        
-        return false;
+    	boolean flushFound = false;
+    	int successfulTries = 0;
+    	boolean next = true;
+    	
+    	for(int i = 0; i < cards.size() && next; i++) {
+    		if(cards.get(i).getSuit().compareTo(cards.get(i+1).getSuit()) == 0) {
+    			successfulTries++;
+    		} else {
+    			next = false;
+    		}
+    		if(successfulTries == 4) {
+				next = false;
+				flushFound = true;
+			}	
+    	}
+    	
+      return flushFound; 
     }
-    
+ 
     public static boolean isFullHouse(ArrayList<Card> cards) {
-        // TODO        
-        return false;
+    	ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
+    	Rank searchedRank;
+        boolean foundThree = false;
+         
+         foundThree = isThreeOfAKind(clonedCards);
+         System.out.println(foundThree);
+        
+         if(foundThree == true) {
+        	 searchedRank = getThreeOfAKindRank(clonedCards);
+        	 
+        	 for(int i = 0; i < clonedCards.size(); i++) {
+        		 if(clonedCards.get(i).getRank() == searchedRank) {
+        			 clonedCards.remove(i);	 
+        		 }
+        	 }
+        	 
+        	 System.out.println(clonedCards);
+        	 
+        	 return(foundThree && isOnePair(clonedCards));
+        	 
+         } else {
+        	 return false;
+         }
+              
     }
-    
+        		
     public static boolean isFourOfAKind(ArrayList<Card> cards) {
-        // TODO        
-        return false;
+    	
+        ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
+        
+        int sameRank = 0;
+        	for (int i = 0; i < clonedCards.size() - 1; i++) {
+        		for (int j = i+1; j < clonedCards.size(); j++) {
+        				if(clonedCards.get(i).getRank() == clonedCards.get(j).getRank()) {
+        					sameRank++;
+        				}
+        		}
+        	}
+        
+        if(sameRank >= 4) {
+        	return true;
+        } else {
+        	return false;
+        } 
     }
-    
+    	
+    	  
     public static boolean isStraightFlush(ArrayList<Card> cards) {
-        // TODO        
-        return false;
+             
+        return isStraight(cards) && isFlush(cards);   
     }
     
     public static boolean isRoyalFlush(ArrayList<Card> cards) {
-        // TODO        
-        return false;
+    	boolean lastCardAce = false;
+    	ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
+    	Collections.sort(clonedCards);
+    	
+    	lastCardAce = (clonedCards.get(clonedCards.size()-1).getRank() == Rank.Ace) ? true : false;
+       
+    	return isStraightFlush(clonedCards) && lastCardAce;
     }
+
+
+	
+	
+	
 }

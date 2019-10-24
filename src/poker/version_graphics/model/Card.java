@@ -1,6 +1,6 @@
 package poker.version_graphics.model;
 
-public class Card {
+public class Card implements Comparable<Card>{
     public enum Suit { Clubs, Diamonds, Hearts, Spades;
         @Override
         public String toString() {
@@ -54,4 +54,16 @@ public class Card {
     public String toString() {
         return rank.toString() + suit.toString();
     }
+
+    
+    // Method to compare cards by rank
+	public int compareTo(Card o) {
+		if(this.getRank().compareTo(o.getRank()) > 0 ) {
+			return 1;
+		} else if(this.getRank().compareTo(o.getRank()) < 0) {
+				return -1;
+			} 
+		return 0;
+	}
+
 }
