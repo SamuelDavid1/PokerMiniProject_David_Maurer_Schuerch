@@ -3,6 +3,7 @@ package poker.version_graphics.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 
 import poker.version_graphics.model.Card.Rank;
 
@@ -86,7 +87,9 @@ public enum HandType {
            		for (int j = i+1; j < clonedCards.size(); j++) {
            				if(clonedCards.get(i).getRank() == clonedCards.get(j).getRank()) {
            					sameRank++;
-           					searchedRank = clonedCards.get(i).getRank();
+           					if(sameRank == 3) {
+           						searchedRank = clonedCards.get(i).getRank();
+           					}
            				}
            		}
            	}
@@ -150,10 +153,13 @@ public enum HandType {
         
          if(foundThree == true) {
         	 searchedRank = getThreeOfAKindRank(clonedCards);
+        	 System.out.println(searchedRank);
         	 
-        	 for(int i = 0; i < clonedCards.size(); i++) {
-        		 if(clonedCards.get(i).getRank() == searchedRank) {
-        			 clonedCards.remove(i);	 
+        	 Iterator<Card> c = clonedCards.iterator();
+        	 while(c.hasNext()){
+        		 Card card = c.next();
+        		 if(card.getRank() == searchedRank) {
+        			 c.remove();
         		 }
         	 }
         	 
