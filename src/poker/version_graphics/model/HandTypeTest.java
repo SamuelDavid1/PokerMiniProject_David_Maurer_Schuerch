@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+
+import poker.version_graphics.model.Card.Rank;
 
 public class HandTypeTest {
 	// We define the hands using abbreviations. The code at the bottom
@@ -83,6 +86,13 @@ public class HandTypeTest {
 			{ "QC", "KC", "AC", "TC", "JC" }
 			};
 	
+	private static String[][] highs = {
+			{ "2S", "2C", "2H", "2D", "5S"},
+			{ "2S", "2C", "3H", "5D", "7H"  },
+			{ "2S", "5C", "5H", "5D", "AH" },
+			{ "QC", "KC", "AC", "TC", "JC" }
+			};
+	
 	// This is where we store the translated hands
 	ArrayList<ArrayList<Card>> highCardHands;
 	ArrayList<ArrayList<Card>> pairHands;
@@ -94,7 +104,7 @@ public class HandTypeTest {
 	ArrayList<ArrayList<Card>> fourOfAKindHands;
 	ArrayList<ArrayList<Card>> straightFlushHands;
 	ArrayList<ArrayList<Card>> royalFlushHands;
-	
+	ArrayList<ArrayList<Card>> highHands;
 	
 	/**
 	 * The makeHands method is called before each test method,
@@ -113,6 +123,8 @@ public class HandTypeTest {
 		fourOfAKindHands = makeHands(fourOfAKinds);
 		straightFlushHands = makeHands(straightFlushs);
 		royalFlushHands = makeHands(royalFlushs);
+		highHands = makeHands(highs);
+		System.out.println("Hallo");
 	}
 	
 
@@ -429,6 +441,64 @@ public class HandTypeTest {
 			assertTrue(HandType.isRoyalFlush(hand));
 		}
 	}
+	@Test
+	public void testGetHighestRankIfOnePair() {
+		ArrayList<Card> cards = pairHands.get(0);
+		System.out.println(cards);
+		System.out.println(HandType.getHighestRankIfOnePair(cards));
+		assertTrue(HandType.getHighestRankIfOnePair(cards) == Rank.Seven);
+		
+		cards = pairHands.get(1);
+		System.out.println(cards);
+		System.out.println(HandType.getHighestRankIfOnePair(cards));
+		assertTrue(HandType.getHighestRankIfOnePair(cards) == Rank.Five);
+		
+		
+	}
+	
+	
+//	@Test
+//	public void testGetHighestRankIfTwoPair() {
+//		ArrayList<Card> cards = twoPairHands.get(0);
+//		System.out.println(cards);
+//		System.out.println(HandType.getHighestRankIfTwoPair(cards));
+//		assertTrue(HandType.getHighestRankIfTwoPair(cards) == Rank.Five);
+//		
+//		cards = twoPairHands.get(1);
+//		System.out.println(cards);
+//		System.out.println(HandType.getHighestRankIfTwoPair(cards));
+//		assertTrue(HandType.getHighestRankIfTwoPair(cards) == Rank.Two);
+//		
+//	}
+	
+	@Test
+	public void testGetHighestRankIfThreeOfAKind() {
+		ArrayList<Card> cards = threeOfAKindHands.get(0);
+		System.out.println(cards);
+		System.out.println(HandType.getHighestRankIfThreeOfAKind(cards));
+		assertTrue(HandType.getHighestRankIfThreeOfAKind(cards) == Rank.Seven);
+		
+		cards = threeOfAKindHands.get(1);
+		System.out.println(cards);
+		System.out.println(HandType.getHighestRankIfThreeOfAKind(cards));
+		assertTrue(HandType.getHighestRankIfThreeOfAKind(cards) == Rank.Ace);
+		
+	}
+	
+	@Test
+	public void testGetHighestRankIfFourOfAKind() {
+		ArrayList<Card> cards = fourOfAKindHands.get(0);
+		System.out.println(cards);
+		System.out.println(HandType.getHighestRankIfFourOfAKind(cards));
+		assertTrue(HandType.getHighestRankIfFourOfAKind(cards) == Rank.Five);
+		
+		cards = fourOfAKindHands.get(1);
+		System.out.println(cards);
+		System.out.println(HandType.getHighestRankIfFourOfAKind(cards));
+		assertTrue(HandType.getHighestRankIfFourOfAKind(cards) == Rank.Six);
+		
+	}
+	
 	
 	
 	/**
