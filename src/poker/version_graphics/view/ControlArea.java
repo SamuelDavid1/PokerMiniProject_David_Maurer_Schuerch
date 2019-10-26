@@ -18,7 +18,7 @@ public class ControlArea extends HBox{
     	super(); // Always call super-constructor first !!
     	
     	this.getChildren().addAll(lblDeck, spacer, btnShuffle, btnDeal, btnJoin, btnLeave);
-
+    	
         HBox.setHgrow(spacer, Priority.ALWAYS); // Use region to absorb resizing
         this.setId("controlArea"); // Unique ID in the CSS
     }
